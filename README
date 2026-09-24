@@ -1,0 +1,41 @@
+# Actividad 8 - Comunicación entre procesos mediante pipes
+
+## Descripción
+
+En esta actividad se trabaja la comunicación entre procesos utilizando
+`fork()` y `pipe()` en C.
+
+El programa crea tres procesos relacionados jerárquicamente:
+
+- **ABUELO**
+- **HIJO**
+- **NIETO**
+
+El proceso ABUELO crea al HIJO y el HIJO crea al NIETO.
+
+La comunicación entre los procesos se realiza mediante dos pipes,
+permitiendo enviar mensajes entre ellos.
+
+La comunicación sigue el siguiente recorrido:
+
+ABUELO → HIJO → NIETO → HIJO → ABUELO
+
+---
+
+## Funcionamiento
+
+El programa utiliza dos pipes:
+
+- `fd1`: se utiliza para la comunicación entre el ABUELO y el HIJO,
+  y también entre el NIETO y el HIJO.
+- `fd2`: se utiliza para la comunicación entre el HIJO y el NIETO,
+  y posteriormente entre el HIJO y el ABUELO.
+
+### 1. Proceso ABUELO
+
+El proceso ABUELO crea el proceso HIJO mediante `fork()`.
+
+Después envía al HIJO el mensaje:
+
+```text
+Hola HIJO, soy el ABUELO.
